@@ -14,6 +14,11 @@ cd -- "$script_dir/.."
 
 fail() { echo "Error: $*" >&2; exit 1; }
 
+if command -v flock >/dev/null; then
+  exec 9>"$(git rev-parse --git-path learnharness-backup.lock)"
+  flock -n 9 || fail "A data backup is running. Try the rebase again later."
+fi
+
 [[ "$(git branch --show-current)" == "main" ]] || fail "Switch to main before running this script."
 [[ -z "$(git status --porcelain --untracked-files=all)" ]] || fail "Commit or stash your changes, including learning data, first."
 

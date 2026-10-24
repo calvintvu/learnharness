@@ -109,6 +109,62 @@ For consistent Git backups, also stop the app while committing data, then start
 it again. A public fork makes committed session content publicly readable.
 This server is the active data source; avoid writing to desktop copies.
 
+## Nightly data backups
+
+The backup script and systemd units are tracked in this repository:
+
+- `scripts/backup-data.py`
+- `deploy/homelab/learnharness-backup.service`
+- `deploy/homelab/learnharness-backup.timer`
+
+The timer runs nightly at **03:00 in the server's timezone** (America/Los_Angeles
+on `cbox`). Missed runs are caught up after the machine starts again. If a session,
+compaction, or background job is active, it defers and retries every 30 minutes.
+Push failures also retry every 30 minutes; an already-created commit is retried
+even if there are no newer data changes. Unchanged data creates no empty commits.
+
+The app stays running. Two matching, idle snapshots are required, and JSON/JSONL
+files must parse before committing. Only Git-trackable `data/` paths enter the
+snapshot; the app's `.secrets/` directory stays local. A separate temporary Git
+index keeps unrelated edits out of the backup. A shared lock prevents concurrent
+backups and Linux runs of the upstream rebase helper. New remote commits or
+diverged history require manual reconciliation: the script never pulls, rebases,
+or force-pushes. Stop the backup timer and service before manual Git maintenance.
+
+On `cbox`, view the last result, next scheduled run, and recent logs with:
+
+```bash
+cd ~/repos/learnharness
+python3 scripts/backup-data.py --status
+```
+
+Run a backup now, follow logs, or pause scheduling:
+
+```bash
+systemctl --user start learnharness-backup.service
+journalctl --user -u learnharness-backup.service -f
+systemctl --user stop learnharness-backup.timer learnharness-backup.service
+# Resume after maintenance:
+systemctl --user start learnharness-backup.timer
+```
+
+To install on another server, configure this checkout's Git author identity and
+unattended push authentication first, then install the units:
+
+```bash
+cp deploy/homelab/learnharness-backup.{service,timer} ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now learnharness-backup.timer
+```
+
+On `cbox`, the origin fetch URL stays HTTPS and its push URL uses the server's
+existing GitHub SSH key. The last attempt and last successful push are recorded
+in `.git/learnharness-backup.json`, outside tracked data. Timer definitions are
+in Git, but installing or editing them requires copying them into the systemd
+user directory and running `systemctl --user daemon-reload`. To verify the backup
+script with temporary local repositories and a mock API, run
+`python3 tests/test_backup_data.py`.
+
 ## Restart after reboot
 
 The Compose restart policy handles process exits. Install the supplied systemd

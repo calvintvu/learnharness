@@ -1,0 +1,12 @@
+[Unit]
+Description=Back up idle LearnHarness data to GitHub
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/repos/learnharness
+ExecStart=/usr/bin/python3 %h/repos/learnharness/scripts/backup-data.py
+Environment=GIT_TERMINAL_PROMPT=0
+Restart=on-failure
+RestartSec=30min
+TimeoutStartSec=5min

@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly LearnHarness GitHub backup at 3 a.m. local time
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+Persistent=true
+Unit=learnharness-backup.service
+
+[Install]
+WantedBy=timers.target
