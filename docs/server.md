@@ -111,19 +111,23 @@ This server is the active data source; avoid writing to desktop copies.
 
 ## Restart after reboot
 
-The Compose restart policy handles process exits. Rootless Podman also needs a
-user service for reboot recovery. On servers with systemd, after creating the
-container above:
+The Compose restart policy handles process exits. Install the supplied systemd
+user unit for reboot recovery after the first image build succeeds:
 
 ```bash
 sudo loginctl enable-linger "$USER"
-systemctl --user enable --now podman-restart.service
+mkdir -p ~/.config/systemd/user
+cp ~/repos/learnharness/deploy/homelab/homelab.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+systemctl --user enable --now homelab.service
 ```
 
-Verify reboot recovery on your server. If your distribution does not ship that
-user unit, use a systemd user unit or Podman Quadlet instead; Compose alone does
-not guarantee startup after reboot. Containers explicitly stopped with
-`podman compose stop` should be started again with `podman compose up -d`.
+The unit uses `~/repos/homelab` and the `/usr/bin/podman-compose` provider. It
+starts the entire shared stack at boot and stops it on user-service shutdown.
+Use `systemctl --user stop homelab` to stop all apps, or `systemctl --user disable
+homelab` to disable boot startup. Keep this unit as the stack's only systemd
+supervisor. A reboot will start apps that were previously stopped individually
+with Compose. Verify reboot recovery on your server when convenient.
 
 References: [Podman Compose](https://docs.podman.io/en/latest/markdown/podman-compose.1.html),
 [Podman restart service](https://docs.podman.io/en/latest/markdown/podman-restart.1.html),
