@@ -12,6 +12,22 @@ Not a chat app with a graph bolted on: sessions are probe→teach lessons, the p
 
 ## Commands
 
+For this fork, close LearnHarness on both machines and commit any learning data
+before updating from the original repository:
+
+```bash
+bash scripts/rebase-upstream.sh
+```
+
+The script requires a clean `main` branch and configured `origin` and `upstream`
+remotes. It fetches both, refuses divergent fork history, creates a recovery
+branch, fast-forwards from your fork when needed, and rebases onto `upstream/main`.
+It prints a push command with a lease tied to the fetched fork commit; it does
+not push automatically. If the lease rejects the push, fetch and inspect the new
+remote commits before proceeding. After publishing rewritten history, preserve
+any local work on the other machine before aligning its checkout with the fork.
+Updating this checkout does not update an installed desktop binary.
+
 ```bash
 npm install          # once
 
