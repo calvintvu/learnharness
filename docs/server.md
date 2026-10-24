@@ -156,6 +156,23 @@ systemctl --user stop learnharness-backup.timer learnharness-backup.service
 systemctl --user start learnharness-backup.timer
 ```
 
+To disable scheduled backup pushes, including after reboot, run on `cbox`:
+
+```bash
+systemctl --user disable --now learnharness-backup.timer
+systemctl --user stop learnharness-backup.service
+```
+
+The second command stops any running backup or pending retry. LearnHarness keeps
+running. To re-enable nightly backups:
+
+```bash
+systemctl --user enable --now learnharness-backup.timer
+```
+
+Because the timer catches up missed runs, re-enabling it may start a backup
+immediately if a scheduled run was missed.
+
 To install on another server, configure this checkout's Git author identity and
 unattended push authentication first, then install the units:
 

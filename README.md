@@ -69,6 +69,9 @@ npm test           # deterministic, no LLM, no network
 
 See the [development guide](docs/development.md), [architecture](docs/architecture.md), and [desktop release guide](docs/desktop-release.md).
 
+For this fork's Podman deployment and commands to pause, disable, or re-enable
+nightly GitHub backups, see the [home server guide](docs/server.md#nightly-data-backups).
+
 Questions, bug reports, and feature requests: [GitHub Issues](https://github.com/amosblomqvist/learnharness/issues).
 
 ## License
