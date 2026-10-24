@@ -1,6 +1,6 @@
 "use client";
 
-import { appFetch as fetch } from "@/lib/app-url";
+import { appFetch as fetch, appUrl } from "@/lib/app-url";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader2Icon, MicIcon } from "lucide-react";
@@ -180,7 +180,7 @@ let workletModule: Promise<void> | null = null;
 function ensureAudioGraph(): { ctx: AudioContext; module: Promise<void> } {
 	if (!sharedCtx) sharedCtx = new AudioContext({ sampleRate: 16000 });
 	if (!workletModule) {
-		workletModule = sharedCtx.audioWorklet.addModule("/worklets/pcm-capture.js").catch((e: unknown) => {
+		workletModule = sharedCtx.audioWorklet.addModule(appUrl("/worklets/pcm-capture.js")).catch((e: unknown) => {
 			workletModule = null; // failed load: retry next run
 			throw e;
 		});
