@@ -25,6 +25,7 @@ RUN apt-get update \
        chromium ca-certificates fonts-dejavu-core fonts-noto-color-emoji tini \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/.next/standalone ./
+COPY scripts/container-healthcheck.cjs ./healthcheck.cjs
 RUN mkdir -p /app/data /app/secrets
 EXPOSE 3000
 ENTRYPOINT ["/usr/bin/tini", "--"]
