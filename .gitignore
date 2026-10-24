@@ -1,5 +1,9 @@
 node_modules/
-data/
+# Learning data is tracked; generated diagnostics and caches stay local.
+data/debug/
+data/.cache/
+data/**/.cache/
+data/**/*.tmp-*
 .next/
 *.log
 .DS_Store

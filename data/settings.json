@@ -1,0 +1,37 @@
+{
+	"version": 1,
+	"general": {
+		"autoUpdate": true
+	},
+	"agent": {
+		"tools": {
+			"explain": true
+		}
+	},
+	"appearance": {
+		"proseFontSize": 18
+	},
+	"models": {
+		"strong": {
+			"model": {
+				"provider": "openrouter",
+				"id": "openrouter/free"
+			},
+			"thinkingLevel": "high"
+		},
+		"cheap": {
+			"model": {
+				"provider": "openrouter",
+				"id": "openrouter/free"
+			},
+			"thinkingLevel": "medium"
+		},
+		"vision": {
+			"model": {
+				"provider": "openrouter",
+				"id": "openrouter/free"
+			},
+			"thinkingLevel": "medium"
+		}
+	}
+}
