@@ -38,7 +38,7 @@ chmod 700 .secrets
 mkdir -p ~/repos/homelab
 cp -n deploy/homelab/compose.yaml ~/repos/homelab/compose.yaml
 cd ~/repos/homelab
-podman compose up -d --build learnharness
+podman compose up -d --build --force-recreate learnharness
 podman compose logs -f learnharness
 ```
 
@@ -108,7 +108,7 @@ git commit -m "Back up learning data"  # skip if there are no changes
 bash scripts/rebase-upstream.sh
 # Review and run the push command printed by the script.
 cd ~/repos/homelab
-podman compose up -d --build learnharness
+podman compose up -d --build --force-recreate learnharness
 ```
 
 For consistent Git backups, also stop the app while committing data, then start
