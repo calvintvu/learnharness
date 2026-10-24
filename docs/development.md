@@ -12,6 +12,8 @@ Not a chat app with a graph bolted on: sessions are probe→teach lessons, the p
 
 ## Commands
 
+For a single instance on a home server, see [the Podman setup](server.md).
+
 For this fork, close LearnHarness on both machines and commit any learning data
 before updating from the original repository:
 

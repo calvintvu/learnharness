@@ -1,0 +1,25 @@
+# Copy to ~/repos/homelab/compose.yaml; paths are relative to that directory.
+services:
+  learnharness:
+    build:
+      context: ../learnharness
+      dockerfile: Containerfile
+    image: localhost/learnharness:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ../learnharness/data:/app/data:Z
+      # Mount the directory: the app saves keys using atomic file replacement.
+      - ../learnharness/.secrets:/app/secrets:Z
+    stop_grace_period: 60s
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/settings').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3

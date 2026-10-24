@@ -1,0 +1,14 @@
+.git
+node_modules
+.next
+dist
+data
+auth.json
+.env*
+.secrets
+.fresh-data
+.memory
+real-data-extraction
+*.log
+*.tsbuildinfo
+.DS_Store
