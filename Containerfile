@@ -1,6 +1,7 @@
 FROM docker.io/library/node:24-bookworm-slim AS build
+ARG BASE_PATH=""
 WORKDIR /app
-ENV NEXT_TELEMETRY_DISABLED=1 ELECTRON_SKIP_BINARY_DOWNLOAD=1
+ENV NEXT_TELEMETRY_DISABLED=1 ELECTRON_SKIP_BINARY_DOWNLOAD=1 NEXT_PUBLIC_BASE_PATH=${BASE_PATH}
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \
@@ -11,8 +12,10 @@ COPY . .
 RUN npm run build && node scripts/build-server.mjs
 
 FROM docker.io/library/node:24-bookworm-slim AS runtime
+ARG BASE_PATH=""
 WORKDIR /app
 ENV NODE_ENV=production \
+	NEXT_PUBLIC_BASE_PATH=${BASE_PATH} \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
     PORT=3000 \

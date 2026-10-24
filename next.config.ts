@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+	basePath: (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/+$/, ""),
 	// Desktop target (Electron wrapper, 2026-09-17): standalone output = a
 	// self-contained .next/standalone/server.js the Electron shell spawns
 	// on 127.0.0.1. Harmless for plain web deploys (extra build output).

@@ -105,7 +105,7 @@
 /* CMU Serif bold (titles) — bundled local file, no CDN dependency. */
 @font-face {
 	font-family: "lh-cmu";
-	src: url("/fonts/cmunbx.ttf") format("truetype");
+	src: url("../public/fonts/cmunbx.ttf") format("truetype");
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;

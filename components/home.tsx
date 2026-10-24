@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CornerDownLeftIcon, DumbbellIcon } from "lucide-react";

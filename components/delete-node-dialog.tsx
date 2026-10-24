@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useBackdropDismiss } from "@/components/backdrop-dismiss";

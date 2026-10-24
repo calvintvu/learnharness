@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { DownloadIcon } from "lucide-react";
 import { Toggle } from "@/components/settings/controls";

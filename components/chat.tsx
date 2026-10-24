@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { createContext, Fragment, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useChatSession } from "@/components/session";
 import { visibleQueuedSteers } from "@/components/session-core";

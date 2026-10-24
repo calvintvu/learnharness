@@ -25,6 +25,7 @@
  * precedent, components/session.ts).
  */
 import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from "react";
+import { appUrl } from "@/lib/app-url";
 import { SERVER_EVENT_TYPES, type ServerEventType, type ServerEvents } from "@/src/core";
 
 /** The minimal source surface the provider consumes — EventSource behind
@@ -36,7 +37,7 @@ export interface NotifySource {
 }
 
 export function openEventsChannel(): NotifySource {
-	const es = new EventSource("/api/events");
+	const es = new EventSource(appUrl("/api/events"));
 	return {
 		close: () => es.close(),
 		onOpen: (cb) => {

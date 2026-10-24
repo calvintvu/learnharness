@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch, appUrl } from "@/lib/app-url";
+
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -882,7 +884,7 @@ function SessionsSidebar() {
 								const chatId = ctxChatId;
 								setCtxChatId(null);
 								const a = document.createElement("a");
-								a.href = `/api/chats/${chatId}/markdown`;
+								a.href = appUrl(`/api/chats/${chatId}/markdown`);
 								a.download = ""; // the route's filename wins
 								document.body.appendChild(a);
 								a.click();

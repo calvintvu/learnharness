@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { useRef, useState } from "react";
 
 // Transport-only types: never import the server's extraction/agent module here.

@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 /**
  * The home knowledge-graph view (W4; vision §1 "Rendering (DECIDED)").
  *

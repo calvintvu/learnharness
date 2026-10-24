@@ -1,4 +1,6 @@
 "use client";
+
+import { appFetch as fetch } from "@/lib/app-url";
 /**
  * The zero-keys surfaces (zero-keys wave, 2026-09-25, owner-locked over
  * Platform's 66dbea9 key-presence gate): when NO model-provider key

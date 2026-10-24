@@ -1,4 +1,6 @@
 "use client";
+
+import { appFetch as fetch } from "@/lib/app-url";
 /**
  * THE SETTINGS DIALOG (settings-app wave, 2026-09-20): the thin settings
  * page graduated into the designed surface — a centered modal over

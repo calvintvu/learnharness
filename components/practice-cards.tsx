@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { MessageResponse } from "@/components/ai-elements/message";
 import { cn } from "@/lib/utils";
 import { repairMathForDisplay, type ArtifactPartProps } from "@/src/core";

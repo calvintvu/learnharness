@@ -1,4 +1,6 @@
 "use client";
+
+import { appFetch as fetch } from "@/lib/app-url";
 /**
  * THE APPEARANCE APPLICATION (thin settings wave, 2026-09-19): the settings
  * record's appearance section actually DOES something — resolved against

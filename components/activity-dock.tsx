@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch, appUrl } from "@/lib/app-url";
+
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIcon, BotIcon, FileTextIcon, PenToolIcon, PlayIcon, SearchIcon, SquareIcon, WaypointsIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -485,7 +487,7 @@ function ActivityBlobRow({
 								<span className="tabular-nums text-card-foreground">{blob.steps}</span>
 							</div>
 						)}
-						<a href={`/chat/${blob.chatId}`} className="text-primary hover:underline">
+						<a href={appUrl(`/chat/${blob.chatId}`)} className="text-primary hover:underline">
 							Open session →
 						</a>
 					</div>

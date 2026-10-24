@@ -10,6 +10,9 @@ The single service includes Node and Chromium for generated demo verification.
 It mounts the checkout's `data/` directory and keeps API keys in the ignored
 `.secrets/` directory. Neither directory is included in the image build context.
 Port 3000 is exposed only on the server's loopback address.
+The server image is built for the `/learnharness` URL prefix so other apps can
+share the same HTTPS hostname. This is a build-time setting (`BASE_PATH` in
+Compose); local development and desktop builds default to the root URL.
 
 The shared Compose file lives at `~/repos/homelab/compose.yaml`, beside the app
 checkouts. Start with the template at `deploy/homelab/compose.yaml` and add other
@@ -46,11 +49,11 @@ continues running after SSH disconnects. No host Node installation is required.
 For a local check on the server:
 
 ```bash
-curl --fail http://127.0.0.1:3000/api/settings
+curl --fail http://127.0.0.1:3000/learnharness/api/settings
 ```
 
 To access it initially from your laptop or desktop, keep this SSH tunnel open
-and visit `http://localhost:3000`:
+and visit `http://localhost:3000/learnharness`:
 
 ```bash
 ssh -L 3000:127.0.0.1:3000 cbox
@@ -68,17 +71,20 @@ files closed.
 On `cbox`, after the local check succeeds:
 
 ```bash
-tailscale serve --bg http://127.0.0.1:3000
+tailscale serve --bg --set-path=/learnharness http://127.0.0.1:3000/learnharness
 tailscale serve status
 ```
 
 Follow any HTTPS setup link Tailscale prints. Open the resulting
-`https://cbox.<your-tailnet>.ts.net` address from a device connected to your
+`https://cbox.<your-tailnet>.ts.net/learnharness` address from a device connected to your
 tailnet, at home or away. Use the actual URL printed by Tailscale. HTTPS also
 allows browser microphone access for dictation. Keep access limited to your
 devices using your tailnet policy; LearnHarness does not provide a user-login
 boundary. If this server already has Serve routes, inspect `tailscale serve
-status` before changing them. This command configures the default HTTPS route.
+status` before changing them. This command configures only `/learnharness`.
+The backend target also includes `/learnharness` because Serve strips the mount
+prefix before appending the target path. No root-level API or asset routes are
+needed. The root URL remains available for another service or an app launcher.
 Your user needs Tailscale operator access (`sudo tailscale set --operator="$USER"`)
 to configure Serve without sudo. Keep Tailscale connected on client devices.
 
@@ -122,6 +128,8 @@ on `cbox`). Missed runs are caught up after the machine starts again. If a sessi
 compaction, or background job is active, it defers and retries every 30 minutes.
 Push failures also retry every 30 minutes; an already-created commit is retried
 even if there are no newer data changes. Unchanged data creates no empty commits.
+The installed service checks the app at `http://127.0.0.1:3000/learnharness`; copy
+the updated service file and reload systemd after changing the app's URL prefix.
 
 The app stays running. Two matching, idle snapshots are required, and JSON/JSONL
 files must parse before committing. Only Git-trackable `data/` paths enter the

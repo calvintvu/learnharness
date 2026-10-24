@@ -1,4 +1,6 @@
 "use client";
+
+import { appFetch as fetch } from "@/lib/app-url";
 /**
  * The first-run setup flow (model-slots wave, 2026-09-20, owner design
  * "A — composer CTA + send interception"): chats cannot start until the

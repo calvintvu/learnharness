@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 /**
  * THE MINIMAL HOME (owner, 2026-10-06 — the no-graph home, take two):
  * when GRAPH RENDERING is off (graph.rendering in settings), the home's

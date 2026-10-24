@@ -4,6 +4,8 @@ services:
     build:
       context: ../learnharness
       dockerfile: Containerfile
+      args:
+        BASE_PATH: /learnharness
     image: localhost/learnharness:local
     restart: unless-stopped
     ports:

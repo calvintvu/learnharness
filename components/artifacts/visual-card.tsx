@@ -1,5 +1,7 @@
 "use client";
 
+import { appFetch as fetch } from "@/lib/app-url";
+
 import { useContext, useState } from "react";
 import { ChatActionsContext } from "@/components/chat";
 import { DownloadIcon, MaximizeIcon } from "lucide-react";
